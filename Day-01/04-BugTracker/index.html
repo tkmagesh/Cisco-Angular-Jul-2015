@@ -14,6 +14,7 @@
             cursor: pointer;
         }
     </style>
+    <script src="angular.js"></script>
     <script>
     /*
         Use Cases
@@ -35,22 +36,51 @@
         15. E2E test the application
     */
     </script>
+    <script>
+        var bugTrackerApp = angular.module("bugTrackerApp", []);
+        bugTrackerApp.controller("bugsController", function($scope){
+            $scope.bugs = [
+                { title : "Null pointer exception", isClosed : false},
+                { title : "Object reference not found", isClosed : false},
+                { title : "Array out of bounds", isClosed : false},
+                { title : "Stack overflow error", isClosed : false}
+            ];
+
+            //$scope.newBug = '';
+            $scope.addBug = function(bug){
+                var newBug = {
+                    title : bug,
+                    isClosed : false
+                };
+                $scope.bugs.push(newBug);
+            };
+            $scope.toggle = function(bug){
+                bug.isClosed = !bug.isClosed;
+            };
+
+            $scope.removeClosed = function(){
+                for(var i= $scope.bugs.length -1; i>=0;i--){
+                    if ($scope.bugs[i].isClosed)
+                        $scope.bugs.splice(i,1);
+                }
+            }
+        });
+    </script>
 </head>
-<body>
+<body ng-app="bugTrackerApp" ng-controller="bugsController">
     <h1>Bug Tracker</h1>
     <div class="stats">
-        <h3><span class="closed">1</span> / <span>3</span></h3>
+        <h3><span class="closed">1</span> / <span>{{bugs.length}}</span></h3>
     </div>
     <div class="search"></div>
     <div class="sort"></div>
     <div class="content">
         <label for="">Bug :</label>
-        <input type="text" name="" id="">
-        <input type="button" value="Add New">
-        <input type="button" value="Remove Closed">
+        <input type="text" name="" id="" ng-model="newBug">
+        <input type="button" value="Add New" ng-click="addBug(newBug)">
+        <input type="button" value="Remove Closed" ng-click="removeClosed()">
         <ol>
-            <li>Bug - 1</li>
-            <li class="closed">Bug - 2</li>
+            <li ng-repeat="bug in bugs" ng-click="toggle(bug)" ng-class="{closed : bug.isClosed}">{{bug}}</li>
         </ol>
     </div>
 </body>
