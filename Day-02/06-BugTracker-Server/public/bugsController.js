@@ -1,6 +1,30 @@
 angular.module("bugTrackerApp")
-    .controller("bugsController", function bugsController($scope, Bug, bugStorage){
-        $scope.bugs = bugStorage.getAll();
+    .factory("bugService", function($http, Bug){
+        return {
+            getAll : function(){
+                var myPromise = new Promise(function(resolve, reject){
+                    var p = $http.get("http://localhost:3000/bugs");
+                    p.then(function(response){
+                        var result = response.data.map(function(bugData){
+                            return new Bug(bugData);
+                        });
+                        resolve(result);
+                    });
+                });
+                return myPromise;
+            }
+        };
+    })
+    .controller("bugsController", function bugsController($scope, Bug, bugStorage, bugService){
+
+        $scope.bugs = [];
+
+        bugService.getAll().then(function(result){
+            $scope.$apply(function(){
+                $scope.bugs = result;
+            });
+        });
+        //$scope.bugs = bugStorage.getAll();
 
         //$scope.newBug = '';
         $scope.addBug = function(bug){
@@ -37,10 +61,12 @@ angular.module("bugTrackerApp").filter("toClosedCount", function(){
         };
 });
 */
+
 angular.module("bugTrackerApp").filter("toClosedCount", function($filter){
     return function(bugs){
             var angFilter = $filter('filter')
             return angFilter(bugs, {isClosed : true}).length;
         };
 });
+
 
