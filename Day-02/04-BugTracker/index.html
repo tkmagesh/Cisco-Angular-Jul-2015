@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bug Tracker</title>
+    <style>
+        .closed {
+            text-decoration: line-through;
+            font-style: italic;
+            font-weight: bold;
+            color : red;
+        }
+        li{
+            cursor: pointer;
+        }
+        div{
+            margin-bottom: 5px;
+        }
+    </style>
+    <script src="angular.js"></script>
+    <script>
+    /*
+        Use Cases
+        =========
+        1. List the bugs - done
+        2. Add a new bug - done
+        3. Toggle the status of the bug - done
+        4. Remove Closed bugs - done
+        5. Display stats - done
+        6. Search for the bugs
+        7. Sort the bugs
+        8. Limit the bug display text size
+        9. Persist bugs in the storage (localStorage)
+        10. Display "created At" for every bug
+        11. Persist the bugs in the server
+        12. Categorize the bugs
+        13. A landing page for the categories
+        14. Unit test the application
+        15. E2E test the application
+    */
+    </script>
+    <script>
+
+        angular.module("bugTrackerApp", []);
+
+        /*bugTrackerApp.value("Bug",  (function(){
+            function Bug(defatuls){
+                defatuls = defatuls || {};
+                this.title = defatuls.title || '';
+                this.isClosed = defatuls.isClosed || false;
+            }
+            Bug.prototype.toggle = function(){
+                this.isClosed = !this.isClosed;
+            };
+            return Bug;
+        })());*/
+
+
+
+
+
+    </script>
+    <script src="Bug.js"></script>
+    <script src="bugsController.js"></script>
+</head>
+<body ng-app="bugTrackerApp" ng-controller="bugsController">
+    <h1>Bug Tracker</h1>
+    <div class="stats">
+        <h3><span class="closed">{{getClosedCount()}}</span> / <span>{{bugs.length}}</span></h3>
+    </div>
+    <div class="search">
+        <label for="">Search :</label>
+        <input type="text" ng-model="searchBug.title">
+        <label for="">closed ? :</label>
+        <input type="checkbox" ng-model="searchBug.isClosed">
+        <a href="#" ng-click="searchBug.isClosed = undefined">Show All</a>
+    </div>
+    <div class="sort"></div>
+    <div class="content">
+        <label for="">Bug :</label>
+        <input type="text" name="" id="" ng-model="newBug">
+        <input type="button" value="Add New" ng-click="addBug(newBug)">
+        <input type="button" value="Remove Closed" ng-click="removeClosed()">
+        <ol>
+            <li
+                ng-repeat="bug in bugs | filter:searchBug"
+                ng-click="toggle(bug)"
+                ng-class="{closed : bug.isClosed}">{{bug.title}}</li>
+        </ol>
+    </div>
+</body>
+</html>
