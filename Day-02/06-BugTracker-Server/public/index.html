@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bug Tracker</title>
+    <style>
+        .closed {
+            text-decoration: line-through;
+            font-style: italic;
+            font-weight: bold;
+            color : red;
+        }
+        li{
+            cursor: pointer;
+        }
+        div{
+            margin-bottom: 5px;
+        }
+        ol{
+            width: 50%;
+            list-style: none;
+        }
+        .bugItem{
+            border : 2px solid gray;
+            background-color: lightgray;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        .title{
+            font-weight: bold;
+        }
+        .timeStamp{
+            font-size: small;
+            font-style: italic;
+        }
+    </style>
+    <script src="angular.js"></script>
+    <script src="moment.js"></script>
+    <script>
+    /*
+        Use Cases
+        =========
+        1. List the bugs - done
+        2. Add a new bug - done
+        3. Toggle the status of the bug - done
+        4. Remove Closed bugs - done
+        5. Display stats - done
+        6. Search for the bugs - done
+        7. Sort the bugs - done
+        8. Limit the bug display text size - done
+        9. Persist bugs in the storage (localStorage) - done
+        10. Display "created At" for every bug - done
+        11. Persist the bugs in the server
+        12. Categorize the bugs
+        13. A landing page for the categories
+        14. Unit test the application
+        15. E2E test the application
+
+        window.localStorage
+            - key/value store
+            - both key and value should be strings
+            - apis
+                - setItem(k,v)
+                - getItem(k) //=> v
+                - removeItem(k)
+                - key(index) //=> k
+                - clear()
+                - length
+
+        var p = $http.get("http://localhost:3000/bugs")
+        p.then(function(response){
+            response.data -> data from the server
+        })
+    */
+    </script>
+    <script src="bugTrackerApp.js"></script>
+    <script src="utils.js"></script>
+    <script src="Bug.js"></script>
+    <script src="bugsController.js"></script>
+    <script src="bugStorage.js"></script>
+    <script>
+    angular.module("bugTrackerApp")
+        .value("momentApi", window.moment)
+        .filter("toMoment", function(momentApi){
+            return function(data){
+                return momentApi(data).fromNow();
+            }
+        });
+    </script>
+
+</head>
+<body ng-app="bugTrackerApp" ng-controller="bugsController">
+    <h1>Bug Tracker</h1>
+    <div class="stats">
+        <h3><span class="closed">{{bugs | toClosedCount}}</span> / <span>{{bugs.length}}</span></h3>
+    </div>
+    <div class="search">
+        <label for="">Search :</label>
+        <input type="text" ng-model="searchBug.title">
+        <label for="">closed ? :</label>
+        <input type="checkbox" ng-model="searchBug.isClosed">
+        <a href="#" ng-click="searchBug.isClosed = undefined">Show All</a>
+    </div>
+    <div class="sort">
+        <label for="">Sort :</label>
+        <input type="text" ng-model="bugSortOrder.by">
+        <label for="">Descending ?</label>
+        <input type="checkbox" ng-model="bugSortOrder.descending">
+    </div>
+    <div class="content">
+        <label for="">Bug :</label>
+        <input type="text" name="" id="" ng-model="newBug">
+        <input type="button" value="Add New" ng-click="addBug(newBug)">
+     <input type="button" value="Remove Closed" ng-click="removeClosed()">
+        <ol>
+            <li
+                ng-repeat="bug in bugs | filter:searchBug | orderBy:bugSortOrder.by:bugSortOrder.descending"
+                ng-click="toggle(bug)"
+                >
+                <div class="bugItem">
+                    <div ng-class="{closed : bug.isClosed}" class="title">
+                        {{bug.title | trimText}}
+                    </div>
+                    <div class="timeStamp">{{bug.createdAt | toMoment}}</div>
+                </div></li>
+        </ol>
+    </div>
+</body>
+</html>

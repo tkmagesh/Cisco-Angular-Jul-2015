@@ -1,0 +1,52 @@
+{
+  "bugs": [
+    {
+      "id": 1,
+      "title": "Null pointer exception",
+      "isClosed": false,
+      "createdAt": "2015-07-09T06:31:42.376Z"
+    },
+    {
+      "id": 2,
+      "title": "Server communication failure",
+      "isClosed": false,
+      "createdAt": "2015-07-09T06:32:07.873Z"
+    },
+    {
+      "id": 3,
+      "title": "User authentication malfunctions",
+      "isClosed": false,
+      "createdAt": "2015-07-09T06:32:17.308Z"
+    },
+    {
+      "id": 4,
+      "title": "Object reference not found exception",
+      "isClosed": false,
+      "createdAt": "2015-07-09T06:32:29.748Z"
+    },
+    {
+      "id": 5,
+      "title": "Stack overflow error",
+      "isClosed": false,
+      "createdAt": "2015-07-09T06:32:55.557Z"
+    },
+    {
+      "id": 6,
+      "title": "Unable to add a new bug",
+      "isClosed": true,
+      "createdAt": "2015-07-09T06:34:07.924Z"
+    },
+    {
+      "id": 7,
+      "title": "Application breaks often",
+      "isClosed": false,
+      "createdAt": "2015-07-09T07:24:19.903Z"
+    },
+    {
+      "title": "Restful service not restful",
+      "isClosed": false,
+      "createdAt": "2015-07-08T06:32:17.308Z",
+      "id": 8
+    }
+  ]
+}

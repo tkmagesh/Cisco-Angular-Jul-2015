@@ -81,4 +81,6 @@ var p = addAsync(100,200);
 
 p.then(function(result){
   console.log("[SC] result = ", result);
-})
+});
+
+
