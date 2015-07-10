@@ -1,6 +1,6 @@
 angular.module("bugTrackerApp")
-    .factory("bugService", function($http, Bug){
-        return {
+    .factory("bugService", function($http, Bug, $q){
+      /*  return {
             getAll : function(){
                 var myPromise = new Promise(function(resolve, reject){
                     var p = $http.get("http://localhost:3000/bugs");
@@ -13,16 +13,42 @@ angular.module("bugTrackerApp")
                 });
                 return myPromise;
             }
-        };
+        };*/
+
+        return {
+            getAll : function(){
+/*
+                var deferred = $q.defer();
+                    var p = $http.get("http://localhost:3000/bugs");
+                    p.then(function(response){
+                        var result = response.data.map(function(bugData){
+                            return new Bug(bugData);
+                        });
+                        deferred.resolve(result);
+                    });
+                return deferred.promise;
+*/
+
+                return  $http.get("http://localhost:3000/bugs")
+                        .then(function(response){
+                            return response.data.map(function(bugData){
+                                return new Bug(bugData);
+                            });
+                        });
+            }
+        }
     })
     .controller("bugsController", function bugsController($scope, Bug, bugStorage, bugService){
+        console.dir($scope);
 
         $scope.bugs = [];
 
         bugService.getAll().then(function(result){
-            $scope.$apply(function(){
+            /*$scope.$apply(function(){
                 $scope.bugs = result;
-            });
+            });*/
+            $scope.bugs = result;
+
         });
         //$scope.bugs = bugStorage.getAll();
 
