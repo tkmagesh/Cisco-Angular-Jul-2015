@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Routing App</title>
+    <style>
+        .menu{
+            list-style: none;
+            margin-left: 0px;
+        }
+        .menu li {
+            display: inline;
+            margin-right: 10px;
+        }
+    </style>
+    <script src="angular.js"></script>
+    <script src="angular-route.js"></script>
+    <script>
+    angular
+        .module("myApp", ["ngRoute"])
+        .config(function($routeProvider){
+            $routeProvider
+                .when("/products", {
+                    //template : "<h2>Products</h2>"
+                    templateUrl : "templates/productsTemplate.html",
+                    controller : "productsController"
+                })
+                //.when("/products/:id" , use $routeParams (in the controller)
+                .when("/customers", {
+                    //template : "<h2>Customers</h2>"
+                templateUrl : "templates/customersTemplate.html"
+                })
+                .otherwise({
+                    redirectTo : "/products"
+                });
+        })
+        .service("productsService", function(){
+            this.getAll = function(){
+                return [
+                    {id : 3, name : "Pen", cost : 110, units : 40, desc : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum beatae suscipit quae magni, temporibus quibusdam dignissimos iste alias explicabo! Laborum qui quod, sit consequuntur veritatis dolore, nihil saepe corrupti quis?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit nulla, vel rem enim aliquid voluptates quisquam doloremque alias aliquam quo officia tempore quae architecto"},
+                    {id : 7, name : "Pencil", cost : 35, units : 30, desc : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum beatae suscipit quae magni, temporibus quibusdam dignissimos iste alias explicabo! Laborum qui quod, sit consequuntur veritatis dolore, nihil saepe corrupti quis?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit nulla, vel rem enim aliquid voluptates quisquam doloremque alias aliquam quo officia tempore quae architecto"},
+                    {id : 9, name : "Marker", cost : 55, units : 70, desc : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum beatae suscipit quae magni, temporibus quibusdam dignissimos iste alias explicabo! Laborum qui quod, sit consequuntur veritatis dolore, nihil saepe corrupti quis?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit nulla, vel rem enim aliquid voluptates quisquam doloremque alias aliquam quo officia tempore quae architecto"},
+                    {id : 5, name : "Scrible Pad", cost : 90, units : 80, desc : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum beatae suscipit quae magni, temporibus quibusdam dignissimos iste alias explicabo! Laborum qui quod, sit consequuntur veritatis dolore, nihil saepe corrupti quis?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit nulla, vel rem enim aliquid voluptates quisquam doloremque alias aliquam quo officia tempore quae architecto"},
+                    {id : 6, name : "Mouse", cost : 1000, units : 90, desc : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum beatae suscipit quae magni, temporibus quibusdam dignissimos iste alias explicabo! Laborum qui quod, sit consequuntur veritatis dolore, nihil saepe corrupti quis?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit nulla, vel rem enim aliquid voluptates quisquam doloremque alias aliquam quo officia tempore quae architecto"}
+                ];
+            }
+        })
+        .controller("productsController", function($scope, productsService){
+            $scope.products = productsService.getAll();
+        });
+    </script>
+
+</head>
+<body ng-app="myApp">
+    <h1>Routing Demo</h1>
+    <ol class="menu">
+        <li><a href="#/products">Products</a></li>
+        <li><a href="#/customers">Customers</a></li>
+    </ol>
+    <div ng-view>
+
+    </div>
+</body>
+</html>
