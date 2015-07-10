@@ -35,11 +35,23 @@ angular.module("bugTrackerApp")
                                 return new Bug(bugData);
                             });
                         });
+            },
+            save : function(bug){
+                if (bug.id){
+                    //put
+                } else {
+                    //post
+                    return $http.post("http://localhost:3000/bugs", bug)
+                        .then(function(response){
+                            console.log(response);
+                            return new Bug(response.data);
+                        });
+                }
             }
         }
     })
     .controller("bugsController", function bugsController($scope, Bug, bugStorage, bugService){
-        console.dir($scope);
+
 
         $scope.bugs = [];
 
@@ -54,12 +66,14 @@ angular.module("bugTrackerApp")
 
         //$scope.newBug = '';
         $scope.addBug = function(bug){
-            var newBug = new Bug({
+            var newBug = {
                 title : bug,
                 isClosed : false
+            };
+            bugService.save(newBug).then(function(newBug){
+                $scope.bugs.push(newBug);
             });
-            bugStorage.save(newBug);
-            $scope.bugs.push(newBug);
+
         };
         $scope.toggle = function(bug){
             bug.toggle();

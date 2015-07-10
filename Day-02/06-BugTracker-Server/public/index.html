@@ -80,6 +80,12 @@
     <script src="bugStorage.js"></script>
     <script>
     angular.module("bugTrackerApp")
+        .config(function(){
+            console.log("config phase is triggered");
+        })
+        .run(function(){
+            console.log("run phase is triggered");
+        })
         .value("momentApi", window.moment)
         .filter("toMoment", function(momentApi){
             return function(data){

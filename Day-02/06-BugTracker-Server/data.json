@@ -47,6 +47,21 @@
       "isClosed": false,
       "createdAt": "2015-07-08T06:32:17.308Z",
       "id": 8
+    },
+    {
+      "title": "Promises dont behave like promises",
+      "isClosed": false,
+      "id": 9
+    },
+    {
+      "title": "sdalfj jsadlkfj ;laf",
+      "isClosed": false,
+      "id": 10
+    },
+    {
+      "title": "post differs from get",
+      "isClosed": false,
+      "id": 11
     }
   ]
 }
