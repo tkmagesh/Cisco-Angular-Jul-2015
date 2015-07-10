@@ -25,7 +25,10 @@
                     templateUrl : "templates/productsTemplate.html",
                     controller : "productsController"
                 })
-                //.when("/products/:id" , use $routeParams (in the controller)
+                .when("/products/:id" , {
+                    templateUrl : "templates/productInfoTemplate.html",
+                    controller : "productInfoController"
+                })
                 .when("/customers", {
                     //template : "<h2>Customers</h2>"
                 templateUrl : "templates/customersTemplate.html"
@@ -47,7 +50,12 @@
         })
         .controller("productsController", function($scope, productsService){
             $scope.products = productsService.getAll();
-        });
+        })
+        .controller("productInfoController", function($scope, $routeParams, productsService){
+            var id = parseInt($routeParams.id,10);
+            $scope.product = productsService.getAll().filter(function(p){ return p.id === id; })[0];
+
+        })
     </script>
 
 </head>
